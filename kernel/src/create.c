@@ -290,7 +290,7 @@ syscall	kill(
 
     	//kprintf("clean space %d\n",prptr->prstklen);
         free(prptr->img);
-        kprintf("offset: %08x\n",prptr->img);
+       // kprintf("offset: %08x\n",prptr->img);
         //freemem((char *)prptr->img,prptr->size);
     }
 

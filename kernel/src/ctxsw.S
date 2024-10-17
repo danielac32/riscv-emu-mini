@@ -85,8 +85,4 @@ ctxsw:
     // mret will enable interrupts and
     // jump to the newly created thread 
     mret
-end_ctxsw:
-    // interrupts disabled: return to old thread
-    // pc is restored, next address is put into
-    // t1 and ignored
-    jalr t1,t0,0
+ 

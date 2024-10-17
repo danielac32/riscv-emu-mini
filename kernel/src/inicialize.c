@@ -13,26 +13,29 @@ struct  memblk  memlist;
 int prcount;        /* Total number of live processes   */
 pid32   currpid;        /* ID of currently executing process    */
 
-
-void ilde(){
+/*
+void ilde3(){
 
     while(1){
-    	//printf("ilde\n");
-        sleep(1);
+    	printf("ilde\n");
+       sleepms(10);
     }
-}
+}*/
 
 void ilde2(){
 
     while(1){
-    	//printf("		ilde2\n");
-        sleep(1);
+    	printf("		ilde2\n");
+        //sleepms(20);
     }
 }
 
 int nullprocess(void) {
-resume(create(ilde2, 512, 3, "ilde2", 0));
-resume(create(shell, 4096, 1, "shell", 0));
+printf("init process\n");
+//resume(create(ilde, 2048 ,3, "ilde", 0));
+resume(create(ilde2, 2048, 1, "ilde2", 0));
+//resume(create(shell, 2048, 1, "shell", 0));
+
 return 0;
 }
 
@@ -45,14 +48,17 @@ sysinit();
 preempt = QUANTUM;
  
 
-int pid=create(ilde, 512, 1, "ilde", 0);
+int pid=create(NULL, 512, 1, "ilde", 0);
 struct procent * prptr = &proctab[pid];
 prptr->prstate = PR_CURR;
 //ready(create(ilde, 2048, 3, "ilde", 0));
 enable();
 ready(create(nullprocess, 2048, 3, "start process", 0));
-
-for(;;);//
+//nullprocess();
+for(;;){
+//	kprintf("riscv32 ......... \n");
+//	MDELAY(1000);
+}
 }
 
 
