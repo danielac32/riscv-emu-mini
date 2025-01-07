@@ -5,12 +5,14 @@
 #include <memory.h>
 #include <stdint.h>
 #include <interrupt.h>
+#include <stddef.h>
 //-----------------------------------------------------------------
 // init: Early init - run before main()
 //-----------------------------------------------------------------
 
 
 extern void nulluser();
+extern void main(int argc, char const *argv[]);
 void start(void)
 {
 
@@ -33,16 +35,12 @@ void start(void)
     kprintf("           [0x%08X to 0x%08X]\n\n",
     (uint32)&_sdata, (uint32)&_ebss - 1);
     
-    //kprintf("enable IRQs\n");
-    // Initialise the newlib syscall interface
-    //syscall_init();
-    //csr_set_irq_enable();
-    //kprintf("disable IRQs\n");
+    
     disable();
-    //kprintf("init timer\n");
+    
     timer_init();
-    //kprintf("waiting...\n");
+ 
     nulluser();
-    //soft_trap();
+  // main(0,NULL);
 }
 

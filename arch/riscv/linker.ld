@@ -35,7 +35,7 @@ SECTIONS {
 
     }
     .sdata : {
-       __global_pointer$ = . + 10k;
+       __global_pointer$ = . + 5k;
     }
 
     _edata = .;
@@ -51,8 +51,8 @@ SECTIONS {
     _end = .;
 
    
-    . = 0x8001d4c0; /* . = 120k;Esta línea define el límite superior */
-
+    /* . = 0x8001d4c0;  . = 120k;Esta línea define el límite superior */
+    . = 0x80000000 + 80k; /* 90k */
     /* Asignar el final a la variable maxxaddr */
      
     

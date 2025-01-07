@@ -34,5 +34,4 @@ void clkinit(void)
 	clktime = 0;		/* Start counting seconds		*/
   count1000 = 0;
 
-	return;
 }

@@ -21,7 +21,7 @@ devcall	ttyinit(
 
 	typtr->tyihead = typtr->tyitail = 	/* Set up input queue	*/
 		&typtr->tyibuff[0];		/*    as empty		*/
-	typtr->tyisem = semcreate(0);		/* Input semaphore	*/
+	typtr->tyisem = semcreate(1);		/* Input semaphore	*/
 	typtr->tyohead = typtr->tyotail = 	/* Set up output queue	*/
 		&typtr->tyobuff[0];		/*    as empty		*/
 	typtr->tyosem = semcreate(TY_OBUFLEN);	/* Output semaphore	*/

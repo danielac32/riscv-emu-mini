@@ -14,6 +14,8 @@ uint32_t get_file_size(FILE *file) {
     return size; // Retornar el tamaño
 }
 
+
+#if 0
 // Función para crear la memoria a partir de un archivo binario
 Memory create_memory(const char *filename) {
     Memory mem;
@@ -60,6 +62,35 @@ Memory create_memory(const char *filename) {
     rewind(mem.file);  // Volver al inicio del archivo original
     return mem;
 }
+
+#else
+Memory create_memory(const char *filename) {
+    Memory mem;
+
+   
+
+    mem.file = fopen(filename, "rb"); // Abrir el archivo en modo lectura
+    if (mem.file == NULL) {
+        printf("Error: No se pudo abrir el archivo.\n");
+        while(1);
+    }
+
+    // Obtener el tamaño del archivo original
+    mem.size = get_file_size(mem.file);
+    mem.p = malloc(90000);
+    
+    uint8_t buffer[BLOCK_SIZE]; // Buffer para copiar datos
+    size_t bytes_read;
+    fread(mem.p, 1, mem.size,mem.file);
+ 
+    fclose(mem.file);
+    //hexDump2(0,mem.p,mem.size);
+    printf("END\n");
+    return mem;
+}
+
+#endif
+
 
 // Función para liberar la memoria
 void free_memory(Memory *mem) {

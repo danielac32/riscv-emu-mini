@@ -7,7 +7,9 @@
 typedef struct {
     FILE *file;
     uint32_t size;
+    char *p;
 } Memory;
+
 
 extern Memory mem;
 

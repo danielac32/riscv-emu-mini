@@ -4,12 +4,13 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <mem.h>
 
 //#include "default64mbdtc.h"
 
 // Just default RAM amount is 64MB.
-uint32_t ram_amt = 121000;
+uint32_t ram_amt = 90000;
 static uint8_t * ram_image;
 int fail_on_all_faults = 0;
 
@@ -46,30 +47,46 @@ static int ReadKBByte();
 
 #define MINIRV32_CUSTOM_MEMORY_BUS
 
+
+static inline bool check_memory_bounds(uint32_t ofs, uint32_t size)
+{
+    return (ofs + size <= MINI_RV32_RAM_SIZE);
+}
+
+
 static void MINIRV32_STORE4(uint32_t ofs, uint32_t val) {
+	if (check_memory_bounds(ofs, 4)) {
    // write_memory_4("dram", ofs, val);
 	//psram_write(ofs,&val,4);
-	cache_write(ofs,&val,4);
+	*((uint32_t *)(mem.p + ofs)) = val;//cache_write(ofs,&val,4);
+}
 
 }
 
 static void MINIRV32_STORE2(uint32_t ofs, uint16_t val) {
     //write_memory_2("dram", ofs, val);
     //psram_write(ofs,&val,2);
-    cache_write(ofs,&val,2);
+    if (check_memory_bounds(ofs, 2)) {
+    *((uint16_t *)(mem.p + ofs)) = val;//cache_write(ofs,&val,2);
+}
 }
 
 static void MINIRV32_STORE1(uint32_t ofs, uint8_t val) {
     //write_memory_1("dram", ofs, val);
     //psram_write(ofs,&val,1);
-    cache_write(ofs,&val,1);
+    if (check_memory_bounds(ofs, 1)) {
+    *((uint8_t *)(mem.p + ofs)) = val;//cache_write(ofs,&val,1);
+}
 }
 
 static uint32_t MINIRV32_LOAD4(uint32_t ofs) {
     uint32_t val = 0;
     //return read_memory_4("dram", ofs);
     //psram_read(ofs,&val,4);
-    cache_read(ofs,&val,4);
+    if (check_memory_bounds(ofs, 4)) {
+    val = *((uint32_t *)(mem.p + ofs));//cache_read(ofs,&val,4);
+
+}
     return val;
 }
 
@@ -77,7 +94,9 @@ static uint16_t MINIRV32_LOAD2(uint32_t ofs) {
     uint16_t val = 0;
     //return read_memory_2("dram", ofs);
     //psram_read(ofs,&val,2);
-    cache_read(ofs,&val,2);
+    if (check_memory_bounds(ofs, 2)) {
+    val = *((uint16_t *)(mem.p + ofs));//cache_read(ofs,&val,2);
+}
     return val;
 }
 
@@ -85,7 +104,9 @@ static uint8_t MINIRV32_LOAD1(uint32_t ofs) {
 	uint8_t val = 0;
       //return read_memory_1("dram", ofs);//(uint8_t)ram_image[ofs];
     //psram_read(ofs,&val,1);
-    cache_read(ofs,&val,1);
+    if (check_memory_bounds(ofs, 1)) {
+    val = *((uint8_t *)(mem.p + ofs));//cache_read(ofs,&val,1);
+}
     return val;
 }
 #include "mini-rv32ima.h"
@@ -170,16 +191,16 @@ restart:
  
 
 	  	int ret;
-		uint64_t *this_ccount = ((uint64_t*)&core.cyclel);
-		uint32_t elapsedUs = GetTimeMicroseconds() / lastTime;
-		lastTime += elapsedUs;
+		//uint64_t *this_ccount = ((uint64_t*)&core.cyclel);
+		//uint32_t elapsedUs = GetTimeMicroseconds() / lastTime;
+		//lastTime += elapsedUs;
 
-	  	ret = MiniRV32IMAStep( &core, NULL, 0, elapsedUs, instrs_per_flip ); // Execute upto 1024 cycles before breaking out.
+	  	ret = MiniRV32IMAStep( &core, NULL, 0, /*elapsedUs*/1, instrs_per_flip ); // Execute upto 1024 cycles before breaking out.
         switch( ret )
 		{
 			case 0: break;
 			case 1: 
-				 *this_ccount += instrs_per_flip;
+				 //*this_ccount += instrs_per_flip;
 			break;
 			case 3:  break;
 			case 0x7777: goto restart;	//syscon code for restart

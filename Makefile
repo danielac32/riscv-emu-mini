@@ -15,7 +15,7 @@ RM = rm -f
 fixpath = $(strip $1)
 
  
-CFLAGS      ?=  -march=rv32ima -mabi=ilp32 -ffreestanding -nostartfiles 
+CFLAGS      ?=  -march=rv32ima -mabi=ilp32 -ffreestanding -nostartfiles  -O1
 INCLUDES     =  -I include -I arch/riscv -I sys -I kernel/inc
 LDSCRIPT     =  arch/riscv/linker.ld
 

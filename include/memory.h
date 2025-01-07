@@ -18,7 +18,7 @@ extern	unsigned char	_edata;			/* End of data segment		*/
 extern	unsigned char	_sbss;			/* Start of bss segment		*/
 extern	unsigned char	_ebss;			/* End of bss segment		*/
 extern	unsigned int	_end;			/* End of program		*/
-#define MAXADDR 0x8001d4c0//0x80000000 + 128000//0x8001e460//0x80055730//0x20055730 //350k
+#define MAXADDR 0x80000000 + 80000 //0x8001d4c0//0x80000000 + 128000//0x8001e460//0x80055730//0x20055730 //350k
 //extern	unsigned int	MAXADDR;
 #define ALIGN(to, x)  ((x+(to)-1) & ~((to)-1))
 

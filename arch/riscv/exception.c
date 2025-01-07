@@ -45,8 +45,10 @@ struct irq_context * exception_handler(struct irq_context *ctx)
     {
         if (_irq_handler)
             ctx = _irq_handler(ctx);
-        else
+        else{
             kprintf("Unhandled IRQ!\n");
+            ctx->pc += 4;
+        }   
     }
     // Exception
     else

@@ -281,9 +281,9 @@ syscall	kill(
 	}
 
 	send(prptr->prparent, pid);
-	for (i=0; i<3; i++) {
-		close(prptr->prdesc[i]);
-	}
+	//for (i=0; i<3; i++) {
+	//	close(prptr->prdesc[i]);
+	//}
 	freestk(prptr->prstkbase, prptr->prstklen);
 	//free(prptr->prstkbase);
     if(prptr->elf == TRUE){

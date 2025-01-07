@@ -68,7 +68,7 @@ void timer_init(void)
    enable_interrupt(3);
    enable_interrupt(11);
    //timel=10;
-   init_timer(10);
+   init_timer(1);
    exception_set_irq_handler(irq_handler);
 }
 //--------------------------------------------------------------------------

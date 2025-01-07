@@ -106,7 +106,7 @@ int readBytes(char *buffer,int length){
 }
  
 
-process	shell (
+process	__attribute__((optimize("Os"))) shell (
 		int nargs, char *arg[]///did32	dev		/* ID of tty device from which	*/
 	)				/*   to accept commands		*/
 {
