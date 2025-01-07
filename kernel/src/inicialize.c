@@ -147,12 +147,12 @@ void test(){
 
     task1();
     task2();
-    cpu_test(1000000);
+    //cpu_test(1000000);
     uint32_t count=0;
 	while(1){
         printf("riscv32 ......... %d\n",count);
         count++;
-        sleepms(100);
+        sleepms(10);
 	}
 }
 
